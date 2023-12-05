@@ -1,28 +1,39 @@
 package tictactoe;
 
-public class Cell {  // save as "Cell.java"
-    // Define properties (package-visible)
-    /** Content of this cell (CROSS, NOUGHT, NO_SEED) */
+import java.awt.*;
+
+public class Cell {
+    public static final int SIZE = 120;
+    public static final int PADDING = SIZE / 5;
+    public static final int SEED_SIZE = SIZE - PADDING*2;
+    public static final int SEED_STROKE_WIDTH = 8;
+
     Seed content;
-    /** Row and column of this cell, not used in this program */
     int row, col;
 
-    /** Constructor to initialize this cell */
-    public Cell(int row, int col) {
+    public Cell(int row, int col){
         this.row = row;
         this.col = col;
         this.content = Seed.NO_SEED;
     }
-
-    /** Reset the cell content to EMPTY, ready for a new game. */
-    public void newGame() {
-        this.content = Seed.NO_SEED;
+    public void newGame(){
+        content = Seed.NO_SEED;
+    }
+    public void paint(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(SEED_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        int x1 = col * SIZE + PADDING;
+        int y1 = row * SIZE + PADDING;
+        if (this.content == Seed.CROSS){
+            g2d.setColor(GameMain.COLOR_GROSS);
+            int x2 = (col + 1) * SIZE - PADDING;
+            int y2 = (row + 1) * SIZE - PADDING;
+            g2d.drawLine(x1, y1, x2, y2);
+            g2d.drawLine(x2, y1, x1, y2);
+        } else if (content == Seed.NOUGHT) {
+            g2d.setColor(GameMain.COLOR_NOUGHT);
+            g2d.drawOval(x1, y1, SEED_SIZE, SEED_SIZE);
+        }
     }
 
-    /** The cell paints itself */
-    public void paint() {
-        // Retrieve the display icon (text) and print
-        String icon = this.content.getIcon();
-        System.out.print(icon);
-    }
 }

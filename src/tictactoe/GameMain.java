@@ -1,84 +1,108 @@
 package tictactoe;
 
-import java.util.Scanner;
-/**
- * The main class for the Tic-Tac-Toe (Console-OO, non-graphics version)
- * It acts as the overall controller of the game.
- */
-public class GameMain {
-    // Define properties
-    /** The game board */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class GameMain extends JPanel {
+    private static final long serialVersionUID = 1L;
+
+    public static final String TITLE = "Tic Tac Toe";
+    public static final Color COLOR_BG = Color.white;
+    public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
+    public static final Color COLOR_GROSS = new Color(239, 105, 80);
+    public static final Color COLOR_NOUGHT = new Color(64, 154, 225);
+    public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
+
     private Board board;
-    /** The current state of the game (of enum State) */
     private State currentState;
-    /** The current player (of enum Seed) */
-    private Seed  currentPlayer;
+    private Seed currentPlayer;
+    private JLabel statusBar;
 
-    private static Scanner in = new Scanner(System.in);
+    public GameMain(){
+        super.addMouseListener(new MouseAdapter() {
 
-    /** Constructor to setup the game */
-    public GameMain() {
-        // Perform one-time initialization tasks
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+                int row = mouseY / Cell.SIZE;
+                int col = mouseX / Cell.SIZE;
+
+                if(currentState == State.PLAYING){
+                    if (row >= 0 && row < Board.ROWS && col >= 0 && col < Board.COLS
+                            && board.cells[row][col].content == Seed.NO_SEED){
+                        currentState = board.stepGame(currentPlayer, row, col);
+                        currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
+                    }
+                }else{
+                    newGame();
+                }
+                repaint();
+            }
+        });
+        statusBar = new JLabel();
+        statusBar.setFont(FONT_STATUS);
+        statusBar.setBackground(COLOR_BG_STATUS);
+        statusBar.setOpaque(true);
+        statusBar.setPreferredSize(new Dimension(300, 30));
+        statusBar.setHorizontalAlignment(JLabel.LEFT);
+        statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
+
+        super.setLayout(new BorderLayout());
+        super.add(statusBar, BorderLayout.PAGE_END);
+        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
+        super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
+
         initGame();
-
-        // Reset the board, currentStatus and currentPlayer
         newGame();
-
-        // Play the game once
-        do {
-            // The currentPlayer makes a move.
-            // Update cells[][] and currentState
-            stepGame();
-            // Refresh the display
-            board.paint();
-            // Print message if game over
-            if (currentState == State.CROSS_WON) {
-                System.out.println("'X' won!\nBye!");
-            } else if (currentState == State.NOUGHT_WON) {
-                System.out.println("'O' won!\nBye!");
-            } else if (currentState == State.DRAW) {
-                System.out.println("It's Draw!\nBye!");
+    }
+    public void initGame(){
+        board = new Board();
+    }
+    public void newGame(){
+        for (int row = 0 ; row < Board.ROWS ; row++){
+            for (int col = 0 ; col < Board.COLS ; col++){
+                board.cells[row][col].content = Seed.NO_SEED;
             }
-            // Switch currentPlayer
-            currentPlayer = (currentPlayer == Seed.CROSS) ? Seed.NOUGHT : Seed.CROSS;
-        } while (currentState == State.PLAYING);  // repeat until game over
+        }
+        currentPlayer = Seed.CROSS;
+        currentState = State.PLAYING;
+    }
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        setBackground(COLOR_BG);
+
+        board.paint(g);
+
+        if (currentState == State.PLAYING){
+            statusBar.setForeground(Color.BLACK);
+            statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
+        } else if (currentState == State.DRAW) {
+            statusBar.setForeground(Color.RED);
+            statusBar.setText("It's a Draw! Click to play again");
+        } else if (currentState == State.CROSS_WON) {
+            statusBar.setForeground(Color.RED);
+            statusBar.setText("'X' won! Click to play again");
+        } else if (currentState == State.NOUGHT_WON) {
+            statusBar.setForeground(Color.RED);
+            statusBar.setText("'O' won! Click to play again");
+        }
     }
 
-    /** Perform one-time initialization tasks */
-    public void initGame() {
-        board = new Board();  // allocate game-board
-    }
-
-    /** Reset the game-board contents and the current states, ready for new game */
-    public void newGame() {
-        board.newGame();  // clear the board contents
-        currentPlayer = Seed.CROSS;   // CROSS plays first
-        currentState = State.PLAYING; // ready to play
-    }
-
-    /** The currentPlayer makes one move.
-     Update cells[][] and currentState. */
-    public void stepGame() {
-        boolean validInput = false;  // for validating input
-        do {
-            String icon = currentPlayer.getIcon();
-            System.out.print("Player '" + icon + "', enter your move (row[1-3] column[1-3]): ");
-            int row = in.nextInt() - 1;   // [0-2]
-            int col = in.nextInt() - 1;
-            if (row >= 0 && row < Board.ROWS && col >= 0 && col < Board.COLS
-                    && board.cells[row][col].content == Seed.NO_SEED) {
-                // Update cells[][] and return the new game state after the move
-                currentState = board.stepGame(currentPlayer, row, col);
-                validInput = true; // input okay, exit loop
-            } else {
-                System.out.println("This move at (" + (row + 1) + "," + (col + 1)
-                        + ") is not valid. Try again...");
-            }
-        } while (!validInput);   // repeat until input is valid
-    }
-
-    /** The entry main() method */
     public static void main(String[] args) {
-        new GameMain();  // Let the constructor do the job
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame(TITLE);
+                frame.setContentPane(new GameMain());
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
     }
 }

@@ -41,6 +41,9 @@ public class GameBoardPanel extends JPanel {
              * Check if the player has solved the puzzle after this move,
              *   by calling isSolved(). Put up a congratulation JOptionPane, if so.
              */
+            if(isSolved()){
+                JOptionPane.showMessageDialog(null, "Congratulation!");
+            }
         }
     }
     private static final long serialVersionUID = 1L;
