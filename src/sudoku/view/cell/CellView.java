@@ -10,7 +10,7 @@ public class CellView extends JLabel {
     CellView(int row, int col){
         super(String.valueOf(Main.puzzle.getNum(row, col)), JLabel.CENTER);
         setFont(SudokuWindow.boardFont);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         setForeground(Color.BLACK);
     }
 }
