@@ -66,7 +66,7 @@ public class CellEdit extends JTextField {
 
     }
     private void setRightColor(){
-        setForeground(Color.GREEN);
+        setBackground(Color.white);
         setForeground(Color.BLACK);
     }
     private void setWrongColor(){

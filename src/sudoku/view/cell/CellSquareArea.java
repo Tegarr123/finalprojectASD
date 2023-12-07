@@ -16,7 +16,7 @@ public class CellSquareArea extends JPanel {
         init();
     }
     private void init(){
-        setLayout(gridLayout);
+        super.setLayout(gridLayout);
         for (int r = 0 ; r < 3 ; r++){
             for (int c = 0 ; c < 3 ; c++){
                 int rowTemp = 3 * this.row + r + 1;
