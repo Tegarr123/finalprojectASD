@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+
 public class Board {
     public static final int ROWS = 3;
     public static final int COLS = 3;
@@ -14,11 +16,15 @@ public class Board {
     public static final int GRID_WIDTH_HALF = GRID_WIDTH / 2;
     public static final Color COLOR_GRID = Color.LIGHT_GRAY;
     public static final int Y_OFFSET = 1;
+    private Image backgroundImage;
 
     Cell[][] cells;
     public Board(){
         initGame();
+        loadImage();
     }
+
+
     public void initGame(){
         cells = new Cell[ROWS][COLS];
         for (int row = 0 ; row < ROWS ; ++row){
@@ -64,6 +70,10 @@ public class Board {
         }
     }
     public void paint(Graphics g){
+
+            // Gambar gambar latar belakang
+            g.drawImage(backgroundImage, 0, 0, null);
+
         g.setColor(COLOR_GRID);
         for (int row = 1 ; row < ROWS ; row++){
             g.fillRoundRect(0, Cell.SIZE * row - GRID_WIDTH_HALF,
@@ -80,5 +90,8 @@ public class Board {
             }
         }
     }
-
+    public void loadImage(){
+        ImageIcon icon = new ImageIcon("C:\\Users\\farel danendra\\OneDrive\\Documents\\ITS\\15632785941.jpg");
+        backgroundImage = icon.getImage();
+    }
 }
