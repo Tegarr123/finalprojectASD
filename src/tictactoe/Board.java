@@ -93,5 +93,6 @@ public class Board {
     public void loadImage(){
         ImageIcon icon = new ImageIcon("C:\\Users\\farel danendra\\OneDrive\\Documents\\ITS\\15632785941.jpg");
         backgroundImage = icon.getImage();
+
     }
 }
