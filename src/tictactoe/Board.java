@@ -72,7 +72,8 @@ public class Board {
     public void paint(Graphics g){
 
             // Gambar gambar latar belakang
-            g.drawImage(backgroundImage, 0, 0, null);
+            g.drawImage(backgroundImage, 0, 0,360,360, null);
+
 
         g.setColor(COLOR_GRID);
         for (int row = 1 ; row < ROWS ; row++){
@@ -91,7 +92,7 @@ public class Board {
         }
     }
     public void loadImage(){
-        ImageIcon icon = new ImageIcon("C:\\Users\\farel danendra\\OneDrive\\Documents\\ITS\\15632785941.jpg");
+        ImageIcon icon = new ImageIcon("src/tictactoe/15632785941.jpg");
         backgroundImage = icon.getImage();
 
     }
