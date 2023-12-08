@@ -28,7 +28,6 @@ public class CellSquareArea extends JPanel {
                 int cellRow = 3 * this.row + r;
                 int cellCol = 3 * this.col + c;
                 Cell newCell = new Cell(cellRow, cellCol);
-                newCell.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 newCell.newGame(SudokuMain.puzzle.numbers[cellRow][cellCol],
                         SudokuMain.puzzle.isGiven[cellRow][cellCol]);
                 if (SudokuMain.puzzle.isGiven[cellRow][cellCol]){

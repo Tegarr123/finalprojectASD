@@ -20,6 +20,8 @@ import javax.swing.*;
         public static Puzzle puzzle;
         public static ToolBar toolBar;
 
+        public static boolean isDark = false;
+
         // Constructor
         public SudokuMain() {
             Repo.repoInit();
@@ -74,7 +76,19 @@ import javax.swing.*;
             board.newGame();
         }
         public static void switchTheme(){
-
+            ImageIcon imageIcon;
+            if (isDark){
+                imageIcon = new ImageIcon(SudokuMain.class.getResource("../images/sun.png"));
+                toolBar.setBackground(Color.WHITE);
+            }else{
+                toolBar.setBackground(new Color(8, 25, 65));
+                imageIcon = new ImageIcon(SudokuMain.class.getResource("../images/moon.png"));
+            }
+            isDark = !isDark;
+            board.newGame();
+            Image image = imageIcon.getImage();
+            Image newImage = image.getScaledInstance(30, 25, Image.SCALE_SMOOTH);
+            toolBar.btn_theme.setIcon(new ImageIcon(newImage));
         }
 
 
