@@ -1,5 +1,6 @@
 package tictactoe;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Cell {
@@ -7,6 +8,9 @@ public class Cell {
     public static final int PADDING = SIZE / 5;
     public static final int SEED_SIZE = SIZE - PADDING*2;
     public static final int SEED_STROKE_WIDTH = 8;
+
+    public static final Image CROSS_ICON =new ImageIcon("src/tictactoe/crab-3.png").getImage();
+    public static final Image NOUGHT_ICON= new ImageIcon("src/tictactoe/octopus-3.png").getImage();
 
     Seed content;
     int row, col;
@@ -24,15 +28,10 @@ public class Cell {
         g2d.setStroke(new BasicStroke(SEED_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         int x1 = col * SIZE + PADDING;
         int y1 = row * SIZE + PADDING;
-        if (this.content == Seed.CROSS){
-            g2d.setColor(GameMain.COLOR_GROSS);
-            int x2 = (col + 1) * SIZE - PADDING;
-            int y2 = (row + 1) * SIZE - PADDING;
-            g2d.drawLine(x1, y1, x2, y2);
-            g2d.drawLine(x2, y1, x1, y2);
-        } else if (content == Seed.NOUGHT) {
-            g2d.setColor(GameMain.COLOR_NOUGHT);
-            g2d.drawOval(x1, y1, SEED_SIZE, SEED_SIZE);
+        if(this.content==Seed.CROSS){
+            g.drawImage(CROSS_ICON, x1,y1, SIZE-2*PADDING, SIZE-2*PADDING, null);
+        }else if(this.content==Seed.NOUGHT){
+            g.drawImage(NOUGHT_ICON, x1,y1, SIZE-2*PADDING, SIZE-2*PADDING, null);
         }
     }
 
