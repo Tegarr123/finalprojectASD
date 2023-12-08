@@ -1,134 +1,84 @@
 package sudoku.model;
 
+import sudoku.controller.SudokuMain;
+import sudoku.puzzleRepo.Repo;
+
+import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Puzzle {
-    private CellComponent sudokuCells[][];
-    private CellComponent toGuessCell[];
-    private int numOfToGuessCell;
-    private boolean hasAnswer;
-    private double diffCoef;
+    // All variables have package access
+    // The numbers on the puzzle
+    public int[][] numbers;
+    // The clues - isGiven (no need to guess) or need to guess
+    public boolean[][] isGiven;
+    public SudokuDiff sudokuDiff;
+    // Constructor
+    public Puzzle(SudokuDiff sudokuDiff) {
+        super();
+        this.sudokuDiff = sudokuDiff;
+        init();
+    }
 
-    public Puzzle(double diffCoef){
-        this.diffCoef = diffCoef;
-        newGame();
-    }
-    public Puzzle(CellComponent[][] readSudokuData){
-        update(readSudokuData);
-    }
-
-    public void init(){
-        sudokuCells = new CellComponent[11][11];
-        toGuessCell = new CellComponent[81];
-        numOfToGuessCell = 0;
-        hasAnswer = false;
-    }
-    public void newGame(){
+    // Generate a new puzzle given the number of cells to be guessed, which can be used
+    //  to control the difficulty level.
+    // This method shall set (or update) the arrays numbers and isGiven
+    public void init() {
+        System.out.println(sudokuDiff);
+        // I hardcode a puzzle here for illustration and testing.
+        numbers =   new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
+        isGiven  = new boolean[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         Random randomizer = new Random();
         randomizer.setSeed(System.currentTimeMillis());
-        if(diffCoef > 1 || diffCoef < 0){
-            diffCoef = 0.36;
+        int getRandom = randomizer.nextInt(10000);
+        String sudokuString;
+        switch (sudokuDiff){
+            case INTERMEDIATE:
+                sudokuString = Repo.intermediate.get(getRandom);
+                break;
+            case CHALLENGING:
+                sudokuString = Repo.challenging.get(getRandom);
+                break;
+            case TOUGH:
+                sudokuString = Repo.tough.get(getRandom);
+                break;
+            case SUPER_TOUGH:
+                sudokuString = Repo.superTough.get(getRandom);
+                break;
+            case INSANE:
+                sudokuString = Repo.insane.get(getRandom);
+                break;
+            default:
+                sudokuString = Repo.easy.get(getRandom);
+                break;
         }
-        int counter = (int) Math.ceil(diffCoef * 81);
-        do {
-            init();
-            for (int now = 0 ; now < counter ; now++){
-                int row = randomizer.nextInt(9)+1;
-                int col = randomizer.nextInt(9)+1;
-                int times = 0;
-                if(sudokuCells[row][col] == null ||sudokuCells[row][col].dataNum == 0){
-                    do {
-                        sudokuCells[row][col] = new CellComponent(row, col, randomizer.nextInt(9)+1);
-                        update(sudokuCells);
-                        times++;
-                        if(times == 9){
-                            sudokuCells[row][col] = null;
-                            update(sudokuCells);
-                            now--;
-                            break;
-                        }
-                    } while (check(row, col)==false);
-                }else {
-                    now--;
-                }
-            }
-            setHasAns();
-        }while (hasAnswer == false);
-    }
-    private void update(CellComponent[][] readSudokuData){
-        init();
-        for (int row = 1 ; row <= 9 ; row++){
-            for (int col = 1 ; col <= 9 ; col++){
-                sudokuCells[row][col] = readSudokuData[row][col];
-                if(sudokuCells[row][col] == null || sudokuCells[row][col].dataNum == 0){
-                    sudokuCells[row][col] = new CellComponent(row, col);
-                    toGuessCell[numOfToGuessCell] = sudokuCells[row][col];
-                    numOfToGuessCell++;
-                }
+        int i = 0;
+        for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
+            for (int c = 0 ; c < SudokuConstants.GRID_SIZE; c++){
+                int numericValue = Character.getNumericValue(sudokuString.charAt(i));
+                this.numbers[r][c] = numericValue;
+                i++;
             }
         }
-    }
-    public boolean check(int row, int col){
-        for (int i = 1 ; i<=9;i++){
-            if (i != col && sudokuCells[row][col].dataNum == sudokuCells[row][i].dataNum){
-                return false;
-            }
-            if (i != row && sudokuCells[row][col].dataNum == sudokuCells[i][col].dataNum){
-                return false;
-            }
-        }
-        for (int r  = (row - 1) / 3 * 3 + 1 ; r <= (row + 2) / 3 * 3 ; r++){
-            for (int c = (col - 1) / 3 * 3 + 1 ; c <= (col + 2) / 3 * 3 ; c++){
-                if (r != row && c != col && sudokuCells[row][col].dataNum == sudokuCells[r][c].dataNum ){
-                    return false;
+
+        // Copy from hardcodedNumbers into the array "numbers"
+
+
+        // Need to use input parameter cellsToGuess!
+        // Hardcoded for testing, only 2 cells of "8" is NOT GIVEN
+
+
+        // Copy from hardcodedIsGiven into array "isGiven"
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                if (numbers[row][col] != 0){
+                    isGiven[row][col] = true;
                 }
             }
         }
-        return true;
     }
-    public int getNum(int row, int col){
-        return sudokuCells[row][col].dataNum;
-    }
-    public boolean canEdit(int row, int col){
-        return sudokuCells[row][col].canEdit;
-    }
-    public void setNum(int row, int col, int num){
-        sudokuCells[row][col].dataNum = num;
-    }
-    public boolean solve(int countCellSolved){
-        if (countCellSolved == numOfToGuessCell){
-            return true;
-        }
-        for (int i = 1 ; i <= 9 ; i++){
-            setNum(toGuessCell[countCellSolved].row, toGuessCell[countCellSolved].col, i);
-            if (check(toGuessCell[countCellSolved].row, toGuessCell[countCellSolved].col) && solve(countCellSolved + 1)){
-                return true;
-            }
-        }
-        setNum(toGuessCell[countCellSolved].row, toGuessCell[countCellSolved].col, 0);
-        return false;
-    }
-    private void setHasAns(){
-        Puzzle backup = new Puzzle(sudokuCells);
-        backup.solve(0);
-        for (int row = 1 ; row <= 9 ; row ++){
-            for (int col = 1 ; col <= 9 ; col++){
-                if (backup.sudokuCells[row][col].dataNum != this.sudokuCells[row][col].dataNum){
-                    hasAnswer = true;
-                    return;
-                }
-            }
-        }
-        hasAnswer = false;
-    }
-    public boolean isWin(){
-        for (int r = 1 ; r <= 9 ; r++){
-            for (int c = 1 ; c <= 9 ; c++){
-                if (sudokuCells[r][c].dataNum == 0 || check(r, c) == false){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+
+    //(For advanced students) use singleton design pattern for this class
 }
+
