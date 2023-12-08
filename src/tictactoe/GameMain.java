@@ -83,7 +83,7 @@ public class GameMain extends JPanel {
 
         if (currentState == State.PLAYING){
             statusBar.setForeground(Color.BLACK);
-            statusBar.setText((currentPlayer == Seed.CROSS) ? "X's Turn" : "O's Turn");
+            statusBar.setText((currentPlayer == Seed.CROSS) ? "Crab's Turn" : "Octopus's Turn");
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again");
@@ -91,12 +91,12 @@ public class GameMain extends JPanel {
         if (currentState == State.CROSS_WON) {
             xWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("X Win! Poin : "+ xWins+" | Click to play again");
+            statusBar.setText("Crab Wins! Poin : "+ xWins+" | Click to play again");
             updateScoreboard();
         }else if (currentState == State.NOUGHT_WON) {
             oWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("O Win! Poin : "+ oWins+" | Click to play again");
+            statusBar.setText("Octopus Wins! Poin : "+ oWins+" | Click to play again");
             updateScoreboard();
 
         }
@@ -122,14 +122,14 @@ public class GameMain extends JPanel {
 
         if (xWins == 3) {
             statusBar.setForeground(Color.RED);
-            statusBar.setText("X WON THE GAME!! Click to play again");
+            statusBar.setText("CRAB WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
             xWins=0;
             oWins=0;
         }
         else if (oWins == 3) {
             statusBar.setForeground(Color.RED);
-            statusBar.setText("O WON THE GAME!! Click to play again");
+            statusBar.setText("OCTOPUS WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
             xWins=0;
             oWins=0;
