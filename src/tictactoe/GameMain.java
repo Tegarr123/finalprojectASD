@@ -21,6 +21,10 @@ public class GameMain extends JPanel {
     private Seed currentPlayer;
     private JLabel statusBar;
 
+    private int xWins=0;
+    private int oWins=0;
+
+
     public GameMain(){
         super.addMouseListener(new MouseAdapter() {
 
@@ -83,15 +87,20 @@ public class GameMain extends JPanel {
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again");
-        } else if (currentState == State.CROSS_WON) {
+        }
+        if (currentState == State.CROSS_WON) {
+            xWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("'X' won! Click to play again");
-        } else if (currentState == State.NOUGHT_WON) {
+            statusBar.setText("X Win! Poin : "+ xWins+" | Click to play again");
+            updateScoreboard();
+        }else if (currentState == State.NOUGHT_WON) {
+            oWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("'O' won! Click to play again");
+            statusBar.setText("O Win! Poin : "+ oWins+" | Click to play again");
+            updateScoreboard();
+
         }
     }
-
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -105,4 +114,31 @@ public class GameMain extends JPanel {
             }
         });
     }
+
+
+    private void updateScoreboard() {
+
+        statusBar.setForeground(Color.BLACK);
+
+        if (xWins == 3) {
+            statusBar.setForeground(Color.RED);
+            statusBar.setText("X WON THE GAME!! Click to play again");
+            //currentState = State.GAME_OVER;
+            xWins=0;
+            oWins=0;
+        }
+        else if (oWins == 3) {
+            statusBar.setForeground(Color.RED);
+            statusBar.setText("O WON THE GAME!! Click to play again");
+            //currentState = State.GAME_OVER;
+            xWins=0;
+            oWins=0;
+        } else {
+            statusBar.setForeground(Color.BLACK);
+        }
+
+
+    }
+
+
 }
