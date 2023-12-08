@@ -5,10 +5,13 @@ import sudoku.model.SudokuDiff;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.GameBoardPanel;
 import sudoku.model.Puzzle;
+import sudoku.view.cell.Cell;
 import sudoku.view.toolbar.ToolBar;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import javax.swing.*;
 /**
  * The main Sudoku program
@@ -19,6 +22,8 @@ import javax.swing.*;
         public static GameBoardPanel board;
         public static Puzzle puzzle;
         public static ToolBar toolBar;
+        public static ArrayList<Cell> toGuessCell = new ArrayList<>();
+        public static Puzzle backup;
 
         public static boolean isDark = false;
 
@@ -29,7 +34,7 @@ import javax.swing.*;
             puzzle = new Puzzle(SudokuDiff.EASY);
             board = new GameBoardPanel();
 
-
+            backup  = puzzle.getBackUp();
             add(board, BorderLayout.CENTER);
             add(toolBar, BorderLayout.PAGE_END);
 
@@ -89,6 +94,20 @@ import javax.swing.*;
             Image image = imageIcon.getImage();
             Image newImage = image.getScaledInstance(30, 25, Image.SCALE_SMOOTH);
             toolBar.btn_theme.setIcon(new ImageIcon(newImage));
+        }
+        public static void hint(){
+            backup.solveSudoku(backup.numbers, 0,0);
+            Random randomize = new Random();
+            randomize.setSeed(System.currentTimeMillis());
+            int getRandom = randomize.nextInt(toGuessCell.size());
+            Cell getCellToSolve = toGuessCell.remove(getRandom);
+            int row = getCellToSolve.getRow();
+            int col = getCellToSolve.getCol();
+            puzzle.numbers[row][col] = backup.numbers[row][col];
+            puzzle.isGiven[row][col] = true;
+
+            board.newGame();
+
         }
 
 

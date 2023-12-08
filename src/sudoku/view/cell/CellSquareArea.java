@@ -3,6 +3,7 @@ package sudoku.view.cell;
 import sudoku.controller.SudokuMain;
 import sudoku.model.Puzzle;
 import sudoku.model.SudokuConstants;
+import sudoku.view.GameBoardPanel;
 import sudoku.view.listener.CellInputListener;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ public class CellSquareArea extends JPanel {
     private int row;
     private int col;
     CellInputListener cellInputListener = new CellInputListener();
+
     /** It also contains a sudoku.model.Puzzle with array numbers and isGiven */
 
     public CellSquareArea(int row, int col){
@@ -33,6 +35,7 @@ public class CellSquareArea extends JPanel {
                 if (SudokuMain.puzzle.isGiven[cellRow][cellCol]){
                     newCell.addActionListener(cellInputListener);
                 }
+                if (!SudokuMain.puzzle.isGiven[cellRow][cellCol]) SudokuMain.toGuessCell.add(newCell);
                 add(newCell);
             }
         }

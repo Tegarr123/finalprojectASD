@@ -33,6 +33,7 @@ public class Cell extends JTextField {
     }
     public void setNumber(int number){
         this.number = number;
+        setText(String.valueOf(number));
         paint();
     }
     /** Reset this cell for a new game, given the puzzle number and isGiven */

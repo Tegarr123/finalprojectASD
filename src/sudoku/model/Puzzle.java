@@ -2,7 +2,9 @@ package sudoku.model;
 
 import sudoku.controller.SudokuMain;
 import sudoku.puzzleRepo.Repo;
+import sudoku.view.cell.Cell;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,6 +16,7 @@ public class Puzzle {
     // The clues - isGiven (no need to guess) or need to guess
     public boolean[][] isGiven;
     public SudokuDiff sudokuDiff;
+
     // Constructor
     public Puzzle(SudokuDiff sudokuDiff) {
         super();
@@ -77,6 +80,17 @@ public class Puzzle {
                 }
             }
         }
+    }
+    public Puzzle getBackUp(){
+        Puzzle backup = new Puzzle(sudokuDiff);
+        for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
+            for (int c = 0 ; c < SudokuConstants.GRID_SIZE ; c++){
+                backup.numbers[r][c] = this.numbers[r][c];
+                backup.isGiven[r][c] = this.isGiven[r][c];
+            }
+        }
+        backup.solveSudoku(backup.numbers, 0, 0);
+        return backup;
     }
 
     //(For advanced students) use singleton design pattern for this class

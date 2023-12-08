@@ -12,9 +12,18 @@ public class ToolBar extends JPanel {
     public JButton btn_newGame;
     public JButton btn_solve;
     public JButton btn_theme;
+    public JButton btn_hint;
     public ImageIcon imageIcon;
     public   JComboBox jComboBox;
     public ToolBar(){
+        btn_hint = new JButton("HINT");
+        btn_hint.setBackground(ToolBarResources.BG_TOOLBAR);
+        btn_hint.setForeground(ToolBarResources.FG_TOOLBAR);
+        btn_hint.setFont(ToolBarResources.FONT_TOOLBAR);
+        btn_hint.addActionListener(e -> {
+            SudokuMain.hint();
+        });
+
         boolean isDark = false;
         imageIcon = new ImageIcon(ToolBar.class.getResource("../../images/sun.png"));
         Image image = imageIcon.getImage();
@@ -35,7 +44,6 @@ public class ToolBar extends JPanel {
                 SudokuMain.solve();
 
         });
-
         btn_newGame = new JButton("NEW GAME");
         btn_newGame.setBackground(ToolBarResources.BG_TOOLBAR);
         btn_newGame.setForeground(ToolBarResources.FG_TOOLBAR);
@@ -49,6 +57,7 @@ public class ToolBar extends JPanel {
         jComboBox = new JComboBox<>(diff);
 
         add(btn_theme);
+        add(btn_hint);
         add(btn_solve);
         add(btn_newGame);
         add(jComboBox);
