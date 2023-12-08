@@ -1,5 +1,6 @@
 package sudoku.controller;
 
+import sudoku.model.SudokuConstants;
 import sudoku.model.SudokuDiff;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.GameBoardPanel;
@@ -7,6 +8,7 @@ import sudoku.model.Puzzle;
 import sudoku.view.toolbar.ToolBar;
 
 import java.awt.*;
+import java.util.Arrays;
 import javax.swing.*;
 /**
  * The main Sudoku program
@@ -64,6 +66,17 @@ import javax.swing.*;
             puzzle.init();
             board.newGame();
         }
+        public static void solve() {
+            boolean[] given = new boolean[SudokuConstants.GRID_SIZE];
+            Arrays.fill(given, true);
+            for (int i = 0 ; i < SudokuConstants.GRID_SIZE ; i++) puzzle.isGiven[i] = given;
+            puzzle.solveSudoku(puzzle.numbers, 0, 0);
+            board.newGame();
+        }
+        public static void switchTheme(){
+
+        }
+
 
     }
 

@@ -22,6 +22,5 @@ public class CellInputListener implements ActionListener {
             sourceCell.setStatus(CellStatus.WRONG_GUESS);
         }
         sourceCell.paint(); // re-paint this cell based on its status
-
     }
 }

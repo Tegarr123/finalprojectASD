@@ -1,6 +1,7 @@
 package sudoku.view.cell;
 
 import sudoku.enums.CellStatus;
+import sudoku.view.listener.CellInputListener;
 
 import javax.swing.*;
 
@@ -17,7 +18,7 @@ public class Cell extends JTextField {
     int number;
     /** The status of this cell defined in enum sudoku.enums.CellStatus */
     public CellStatus status;
-
+    CellInputListener cellInputListener = new CellInputListener();
     /** Constructor */
     public Cell(int row, int col) {
         super();   // JTextField
@@ -26,12 +27,12 @@ public class Cell extends JTextField {
         // Inherited from JTextField: Beautify all the cells once for all
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(CellResources.FONT_NUMBERS);
+        super.addActionListener(cellInputListener);
     }
     public void setNumber(int number){
         this.number = number;
         paint();
     }
-
     /** Reset this cell for a new game, given the puzzle number and isGiven */
     public void newGame(int number, boolean isGiven) {
         this.number = number;
@@ -45,13 +46,21 @@ public class Cell extends JTextField {
             // Inherited from JTextField: Set display properties
             super.setText(number + "");
             super.setEditable(false);
-            super.setBackground(CellResources.BG_GIVEN);
+            if((this.row/3)%2!=0 ^ (this.col/3)%2!=0){
+                super.setBackground(CellResources.BG_GIVEN_2);
+            }else{
+                super.setBackground(CellResources.BG_GIVEN);
+            }
             super.setForeground(CellResources.FG_GIVEN);
         } else if (status == CellStatus.TO_GUESS) {
             // Inherited from JTextField: Set display properties
             super.setText("");
             super.setEditable(true);
-            super.setBackground(CellResources.BG_TO_GUESS);
+            if((this.row/3)%2!=0 ^ (this.col/3)%2!=0){
+                super.setBackground(CellResources.BG_TO_GUESS_2);
+            }else{
+                super.setBackground(CellResources.BG_TO_GUESS);
+            }
             super.setForeground(CellResources.FG_NOT_GIVEN);
         } else if (status == CellStatus.CORRECT_GUESS) {  // from TO_GUESS
             super.setBackground(CellResources.BG_CORRECT_GUESS);

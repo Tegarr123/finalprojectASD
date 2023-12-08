@@ -8,7 +8,6 @@ import sudoku.model.SudokuDiff;
 import sudoku.view.cell.Cell;
 import sudoku.view.cell.CellSquareArea;
 import sudoku.view.listener.CellInputListener;
-import sudoku1.controller.Main;
 
 import java.awt.*;
 import java.awt.event.*;
