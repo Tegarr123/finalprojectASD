@@ -92,7 +92,7 @@ public class Board {
         }
     }
     public void loadImage(){
-        ImageIcon icon = new ImageIcon("src/tictactoe/15632785941.jpg");
+        ImageIcon icon = new ImageIcon("src/tictactoe/pantai.jpg");
         backgroundImage = icon.getImage();
 
     }
