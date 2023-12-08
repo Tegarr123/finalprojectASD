@@ -1,36 +1,41 @@
 package sudoku.view.cell;
 
-import sudoku.controller.Main;
+import sudoku.controller.SudokuMain;
+import sudoku.model.Puzzle;
+import sudoku.model.SudokuConstants;
+import sudoku.view.listener.CellInputListener;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class CellSquareArea extends JPanel {
-    private GridLayout gridLayout = new GridLayout(3, 3);
+    GridLayout gridLayout = new GridLayout(SudokuConstants.SUBGRID_SIZE, SudokuConstants.SUBGRID_SIZE);
     private int row;
     private int col;
+    CellInputListener cellInputListener = new CellInputListener();
+    /** It also contains a sudoku.model.Puzzle with array numbers and isGiven */
 
     public CellSquareArea(int row, int col){
+
         this.row = row;
         this.col = col;
-        init();
+        initialize();
     }
-    private void init(){
+    public void initialize(){
         super.setLayout(gridLayout);
-        for (int r = 0 ; r < 3 ; r++){
-            for (int c = 0 ; c < 3 ; c++){
-                int rowTemp = 3 * this.row + r + 1;
-                int colTemp = 3 * this.col + c + 1;
-                if(Main.puzzle.canEdit(rowTemp, colTemp)){
-                    add(new CellEdit(rowTemp, colTemp));
-                } else {
-                    add(new CellView(rowTemp, colTemp));
+        for (int r = 0 ; r < SudokuConstants.SUBGRID_SIZE ; r++){
+            for (int c = 0 ; c < SudokuConstants.SUBGRID_SIZE ; c++){
+                int cellRow = 3 * this.row + r;
+                int cellCol = 3 * this.col + c;
+                Cell newCell = new Cell(cellRow, cellCol);
+                newCell.newGame(SudokuMain.puzzle.numbers[cellRow][cellCol],
+                        SudokuMain.puzzle.isGiven[cellRow][cellCol]);
+                if (SudokuMain.puzzle.isGiven[cellRow][cellCol]){
+                    newCell.addActionListener(cellInputListener);
                 }
+                add(newCell);
             }
         }
     }
-
-
-
 
 }

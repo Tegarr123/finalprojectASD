@@ -1,4 +1,4 @@
-package sudoku.controller;
+package sudoku1.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

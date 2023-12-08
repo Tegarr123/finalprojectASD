@@ -1,6 +1,6 @@
-package sudoku.view;
+package sudoku1.view;
 
-import sudoku.view.cell.CellSquareArea;
+import sudoku1.view.cell.CellSquareArea;
 
 import javax.swing.*;
 import java.awt.*;

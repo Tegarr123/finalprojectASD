@@ -1,7 +1,7 @@
-package sudoku.view.cell;
+package sudoku1.view.cell;
 
-import sudoku.controller.Main;
-import sudoku.view.SudokuWindow;
+import sudoku1.controller.Main;
+import sudoku1.view.SudokuWindow;
 
 import javax.swing.*;
 import java.awt.*;

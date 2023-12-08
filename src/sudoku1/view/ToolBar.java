@@ -1,12 +1,12 @@
-package sudoku.view;
+package sudoku1.view;
 
-import sudoku.controller.Main;
+import sudoku1.controller.Main;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ToolBar extends JPanel {
     private ToolTimer toolTimer;
+    private JLabel kel7;
 
     ToolBar(){
         init();

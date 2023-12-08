@@ -1,4 +1,4 @@
-package sudoku.model;
+package sudoku1.model;
 
 public class CellComponent {
     int row;
