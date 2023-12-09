@@ -11,9 +11,11 @@ package sudoku.view.cell;
 
 import sudoku.controller.SudokuMain;
 import sudoku.enums.CellStatus;
-import sudoku.view.listener.CellInputListener;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 
 public class Cell extends JTextField {
@@ -38,7 +40,7 @@ public class Cell extends JTextField {
         // Inherited from JTextField: Beautify all the cells once for all
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(CellResources.FONT_NUMBERS);
-        super.addActionListener(cellInputListener);
+        super.getDocument().addDocumentListener(cellInputListener);
     }
     public void setNumber(int number){
         this.number = number;
@@ -125,5 +127,69 @@ public class Cell extends JTextField {
     public int getCol() {
         return col;
     }
+    private class CellInputListener implements // ActionListener,
+            DocumentListener {
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // Get a reference of the JTextField that triggers this action event
+        //     Cell sourceCell = (Cell) e.getSource();
+        // Retrieve the int entered
+        //     int numberIn = Integer.parseInt(sourceCell.getText());
+        // For debugging
+        //     System.out.println("You entered " + numberIn);
+        //     if (numberIn == sourceCell.getNumber()) {
+        //         sourceCell.setStatus(CellStatus.CORRECT_GUESS);
+        //     } else {
+        //         sourceCell.setStatus(CellStatus.WRONG_GUESS);
+        //     }
+        //     sourceCell.paint(); // re-paint this cell based on its status
+        // }
 
-}
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            if (getDocument().getLength() > 1){
+                SudokuMain.puzzle.numbers[row][col] = 0;
+                SudokuMain.puzzle.isGiven[row][col] = false;
+                setBackground(CellResources.BG_WRONG_GUESS);
+            }else {
+                changedUpdate(e);
+            }
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            if (getDocument().getLength() == 0){
+                SudokuMain.puzzle.numbers[row][col] = 0;
+                SudokuMain.puzzle.isGiven[row][col] = false;
+                setStatus(CellStatus.TO_GUESS);
+                paint();
+            }else {
+                changedUpdate(e);
+            }
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            try{
+                int getData = Integer.valueOf(getDocument().getText(0,1));
+                SudokuMain.puzzle.numbers[row][col] = getData;
+                SudokuMain.puzzle.isGiven[row][col] = true;
+                if (SudokuMain.puzzle.check(row, col)){
+                }else {
+                    setStatus(CellStatus.WRONG_GUESS);
+                    paint();
+                }
+            }catch (Exception err){
+                SudokuMain.puzzle.numbers[row][col] = 0;
+                SudokuMain.puzzle.isGiven[row][col] = false;
+                setStatus(CellStatus.WRONG_GUESS);
+                paint();
+            }
+        }
+    }
+
+
+    }
+
+
+

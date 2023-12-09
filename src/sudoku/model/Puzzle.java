@@ -90,7 +90,7 @@ public class Puzzle {
             }
         }
     }
-    public Puzzle getBackUp(){
+    public Puzzle getSolvedBackUp(){
         Puzzle backup = new Puzzle(sudokuDiff);
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE ; c++){
@@ -98,7 +98,7 @@ public class Puzzle {
                 backup.isGiven[r][c] = this.isGiven[r][c];
             }
         }
-        backup.solveSudoku(backup.numbers, 0, 0);
+        backup.solveSudoku(backup.numbers, 0 , 0);
         return backup;
     }
 
@@ -156,6 +156,34 @@ public class Puzzle {
                 if (grid[i + startRow][j + startCol] == num)
                     return false;
 
+        return true;
+    }
+    public boolean check(int row, int col) {
+        for (int i = 0; i < 9; i++) {
+            if (i != col && numbers[row][col] == numbers[row][i]) {
+                return false;
+            }
+            if (i != row && numbers[row][col] == numbers[i][col]) {
+                return false;
+            }
+        }
+        for (int r = (row) / 3 * 3; r < (row + 3) / 3 * 3 ; r++) {
+            for (int c = (col ) / 3 * 3 ; c < (col + 3) / 3 * 3 ; c++) {
+                if (r != row && c != col && numbers[row][col] == numbers[r][c]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean isWin() {
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (numbers[r][c] == 0 || check(r, c) == false) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 }

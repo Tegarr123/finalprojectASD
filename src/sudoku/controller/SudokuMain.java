@@ -43,7 +43,7 @@ import javax.swing.*;
             puzzle = new Puzzle(SudokuDiff.EASY);
             board = new GameBoardPanel();
 
-            backup  = puzzle.getBackUp();
+            backup  = puzzle.getSolvedBackUp();
             add(board, BorderLayout.CENTER);
             add(toolBar, BorderLayout.PAGE_END);
 
@@ -80,6 +80,7 @@ import javax.swing.*;
                     break;
             }
             puzzle.init();
+            backup = puzzle.getSolvedBackUp();
             board.newGame();
         }
         public static void solve() {
@@ -105,10 +106,9 @@ import javax.swing.*;
             toolBar.btn_theme.setIcon(new ImageIcon(newImage));
         }
         public static void hint(){
-            backup.solveSudoku(backup.numbers, 0,0);
+
             Random randomize = new Random();
-            randomize.setSeed(System.currentTimeMillis());
-            int getRandom = randomize.nextInt(toGuessCell.size());
+            int getRandom = randomize.nextInt(0,toGuessCell.size());
             Cell getCellToSolve = toGuessCell.remove(getRandom);
             int row = getCellToSolve.getRow();
             int col = getCellToSolve.getCol();

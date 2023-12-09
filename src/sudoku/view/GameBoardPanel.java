@@ -9,17 +9,10 @@
  */
 package sudoku.view;
 
-import sudoku.controller.SudokuMain;
-import sudoku.enums.CellStatus;
-import sudoku.model.Puzzle;
 import sudoku.model.SudokuConstants;
-import sudoku.model.SudokuDiff;
-import sudoku.view.cell.Cell;
 import sudoku.view.cell.CellSquareArea;
-import sudoku.view.listener.CellInputListener;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class GameBoardPanel extends JPanel {
@@ -53,8 +46,6 @@ public class GameBoardPanel extends JPanel {
                 super.add(cellSquareAreas[row][col]);   // JPanel
             }
         }
-
-        CellInputListener listener = new CellInputListener();
 
 
         super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));

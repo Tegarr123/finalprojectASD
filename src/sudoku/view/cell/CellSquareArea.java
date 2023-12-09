@@ -10,10 +10,7 @@
 package sudoku.view.cell;
 
 import sudoku.controller.SudokuMain;
-import sudoku.model.Puzzle;
 import sudoku.model.SudokuConstants;
-import sudoku.view.GameBoardPanel;
-import sudoku.view.listener.CellInputListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +19,7 @@ public class CellSquareArea extends JPanel {
     GridLayout gridLayout = new GridLayout(SudokuConstants.SUBGRID_SIZE, SudokuConstants.SUBGRID_SIZE);
     private int row;
     private int col;
-    CellInputListener cellInputListener = new CellInputListener();
+
 
     /** It also contains a sudoku.model.Puzzle with array numbers and isGiven */
 
@@ -41,9 +38,6 @@ public class CellSquareArea extends JPanel {
                 Cell newCell = new Cell(cellRow, cellCol);
                 newCell.newGame(SudokuMain.puzzle.numbers[cellRow][cellCol],
                         SudokuMain.puzzle.isGiven[cellRow][cellCol]);
-                if (SudokuMain.puzzle.isGiven[cellRow][cellCol]){
-                    newCell.addActionListener(cellInputListener);
-                }
                 if (!SudokuMain.puzzle.isGiven[cellRow][cellCol]) SudokuMain.toGuessCell.add(newCell);
                 add(newCell);
             }
