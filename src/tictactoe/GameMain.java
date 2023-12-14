@@ -34,10 +34,26 @@ public class GameMain extends JPanel {
     private BottomBar bottomBar;
     private int xWins=0;
     private int oWins=0;
+    private String player1name;
+    private String player2name;
 
+    public String getPlayer1name(){
+        return player1name;
+    }
 
+    public String getPlayer2name(){
+        return player2name;
+    }
     public GameMain(){
+        player1name = JOptionPane.showInputDialog(this, "Enter your name as crab:", "Player 1", JOptionPane.PLAIN_MESSAGE);
+        player2name = JOptionPane.showInputDialog(this, "Enter your name as octopus:", "Player 2", JOptionPane.PLAIN_MESSAGE);
+        if (player1name == null || player1name.trim().isEmpty()) {
+            player1name = "Crab";
+        }
 
+        if (player2name == null || player2name.trim().isEmpty()) {
+            player2name = "Octopus";
+        }
         super.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -113,7 +129,7 @@ public class GameMain extends JPanel {
 
         if (currentState == State.PLAYING){
             statusBar.setForeground(Color.BLACK);
-            statusBar.setText((currentPlayer == Seed.CROSS) ? "Crab's Turn" : "Octopus's Turn");
+            statusBar.setText((currentPlayer == Seed.CROSS) ? player1name +"'s Turn" : player2name+"'s Turn");
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again");
@@ -121,12 +137,12 @@ public class GameMain extends JPanel {
         if (currentState == State.CROSS_WON) {
             xWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("Crab Wins! Poin : "+ xWins+" | Click to play again");
+            statusBar.setText(player1name+" Wins! Poin : "+ xWins+" | Click to play again");
             updateScoreboard();
         }else if (currentState == State.NOUGHT_WON) {
             oWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("Octopus Wins! Poin : "+ oWins+" | Click to play again");
+            statusBar.setText(player2name+" Wins! Poin : "+ oWins+" | Click to play again");
             updateScoreboard();
 
         }
@@ -153,7 +169,7 @@ public class GameMain extends JPanel {
         if (xWins == 3) {
             JOptionPane.showMessageDialog(this, "CRAB WON");
             statusBar.setForeground(Color.RED);
-            statusBar.setText("CRAB WON THE GAME!! Click to play again");
+            statusBar.setText(player1name+" WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
             xWins=0;
             oWins=0;
@@ -162,7 +178,7 @@ public class GameMain extends JPanel {
         else if (oWins == 3) {
             JOptionPane.showMessageDialog(this, "OCTOPUS WIN");
             statusBar.setForeground(Color.RED);
-            statusBar.setText("OCTOPUS WON THE GAME!! Click to play again");
+            statusBar.setText(player2name+" WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
             xWins=0;
             oWins=0;
