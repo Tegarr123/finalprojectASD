@@ -83,6 +83,7 @@ public class GameMain extends JPanel {
             board.initGame();
             board.newGame();
             updateUI();
+
         });
         bottomBar.add(bottomBar.buttonSwitchBackground);
         add(board, BorderLayout.CENTER);
