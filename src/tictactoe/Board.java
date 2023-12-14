@@ -86,8 +86,7 @@ public class Board extends JPanel{
         }
 
     public void paint(Graphics g){
-
-            // Gambar gambar latar belakang
+        // Gambar gambar latar belakang
         g.drawImage(backgroundImage, 0, 0,360,360, null);
 
 
