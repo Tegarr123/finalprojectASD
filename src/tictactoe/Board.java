@@ -33,6 +33,7 @@ public class Board extends JPanel{
 
     Cell[][] cells;
     public Board(){
+
         initGame();
         loadImage();
     }
