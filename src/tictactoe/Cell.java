@@ -17,7 +17,6 @@ public class Cell {
     public static final int PADDING = SIZE / 5;
     public static final int SEED_SIZE = SIZE - PADDING*2;
     public static final int SEED_STROKE_WIDTH = 8;
-
     public static final Image CROSS_ICON =new ImageIcon("src/tictactoe/crab-3.png").getImage();
     public static final Image NOUGHT_ICON= new ImageIcon("src/tictactoe/octopus-3.png").getImage();
 
@@ -29,6 +28,7 @@ public class Cell {
         this.col = col;
         this.content = Seed.NO_SEED;
     }
+
     public void newGame(){
         content = Seed.NO_SEED;
     }

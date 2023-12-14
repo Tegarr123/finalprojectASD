@@ -46,6 +46,7 @@ public class Board extends JPanel{
             }
         }
     }
+
     public void newGame(){
         for (int row = 0 ; row < ROWS ; row++){
             for (int col = 0 ; col < COLS ; col++){
@@ -53,6 +54,7 @@ public class Board extends JPanel{
             }
         }
     }
+
     public State stepGame(Seed player, int selectedRow, int selectedCol){
         cells[selectedRow][selectedCol].content = player;
 
@@ -71,21 +73,22 @@ public class Board extends JPanel{
             && cells[1][1].content == player
             && cells[2][0].content == player){
             return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
-        }else{
-            for (int row = 0 ; row < ROWS ; row++){
-                for (int col = 0 ; col < COLS ; col++){
-                    if (cells[row][col].content == Seed.NO_SEED){
-                        return State.PLAYING;
+            }else{
+                for (int row = 0 ; row < ROWS ; row++){
+                    for (int col = 0 ; col < COLS ; col++){
+                        if (cells[row][col].content == Seed.NO_SEED){
+                            return State.PLAYING;
+                        }
                     }
                 }
+                return State.DRAW;
             }
-            return State.DRAW;
         }
-    }
+
     public void paint(Graphics g){
 
             // Gambar gambar latar belakang
-            g.drawImage(backgroundImage, 0, 0,360,360, null);
+        g.drawImage(backgroundImage, 0, 0,360,360, null);
 
 
         g.setColor(COLOR_GRID);
@@ -104,11 +107,11 @@ public class Board extends JPanel{
             }
         }
     }
+
     public void loadImage(){
         iter = (iter+1)%3;
         ImageIcon icon = new ImageIcon(path[iter]);
         backgroundImage = icon.getImage();
-
     }
 
 }
