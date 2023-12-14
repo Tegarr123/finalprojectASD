@@ -107,6 +107,7 @@ public class Puzzle {
         int curCol = 0;
         int curValue =1;
         int time = 0 ;
+        System.out.println("==="+"UNSOLVED"+"===");
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE ; c++){
                 System.out.print(numbers[r][c] + " ");
@@ -171,6 +172,7 @@ public class Puzzle {
                 }
             }
         }
+        System.out.println("==="+"SOLVED"+"===");
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE ; c++){
                 System.out.print(numbers[r][c] + " ");
@@ -179,7 +181,6 @@ public class Puzzle {
         }
         System.out.println("Number of steps: " + time);
 
-        SudokuMain.board.newGame();
         return true;
     }
     public boolean[][] setLocked(int[][] board){

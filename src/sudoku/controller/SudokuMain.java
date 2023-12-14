@@ -9,7 +9,7 @@
  */
 package sudoku.controller;
 
-import sudoku.model.SudokuConstants;
+
 import sudoku.model.SudokuDiff;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.GameBoardPanel;
@@ -18,14 +18,16 @@ import sudoku.view.cell.Cell;
 import sudoku.view.toolbar.ToolBar;
 
 import java.awt.*;
+import java.io.Serial;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import javax.swing.*;
 /**
  * The main Sudoku program
  */
     public class SudokuMain extends JFrame{
+        @Serial
         private static final long serialVersionUID = 1L;  // to prevent serial warning
         // private variables
         public static GameBoardPanel board;
@@ -76,6 +78,8 @@ import javax.swing.*;
                 case "INSANE":
                     puzzle.sudokuDiff = SudokuDiff.INSANE;
                     break;
+                case null:
+                    break;
                 default:
                     puzzle.sudokuDiff = SudokuDiff.EASY;
                     break;
@@ -86,16 +90,18 @@ import javax.swing.*;
         }
 
         public static void backtrackSolve(){
+
             puzzle.solveSudoku();
+            SudokuMain.board.newGame();
         }
         public static void switchTheme(){
             ImageIcon imageIcon;
             if (isDark){
-                imageIcon = new ImageIcon(SudokuMain.class.getResource("../images/sun.png"));
+                imageIcon = new ImageIcon(Objects.requireNonNull(SudokuMain.class.getResource("../images/sun.png")));
                 toolBar.setBackground(Color.WHITE);
             }else{
                 toolBar.setBackground(new Color(8, 25, 65));
-                imageIcon = new ImageIcon(SudokuMain.class.getResource("../images/moon.png"));
+                imageIcon = new ImageIcon(Objects.requireNonNull(SudokuMain.class.getResource("../images/moon.png")));
             }
             isDark = !isDark;
             board.newGame();
