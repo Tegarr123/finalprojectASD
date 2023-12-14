@@ -13,8 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 
 public class GameMain extends JPanel {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final String TITLE = "Tic Tac Toe";
