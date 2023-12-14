@@ -42,6 +42,7 @@ public class Board {
             }
         }
     }
+
     public void newGame(){
         for (int row = 0 ; row < ROWS ; row++){
             for (int col = 0 ; col < COLS ; col++){
@@ -49,6 +50,7 @@ public class Board {
             }
         }
     }
+
     public State stepGame(Seed player, int selectedRow, int selectedCol){
         cells[selectedRow][selectedCol].content = player;
 
@@ -67,17 +69,18 @@ public class Board {
             && cells[1][1].content == player
             && cells[2][0].content == player){
             return (player == Seed.CROSS) ? State.CROSS_WON : State.NOUGHT_WON;
-        }else{
-            for (int row = 0 ; row < ROWS ; row++){
-                for (int col = 0 ; col < COLS ; col++){
-                    if (cells[row][col].content == Seed.NO_SEED){
-                        return State.PLAYING;
+            }else{
+                for (int row = 0 ; row < ROWS ; row++){
+                    for (int col = 0 ; col < COLS ; col++){
+                        if (cells[row][col].content == Seed.NO_SEED){
+                            return State.PLAYING;
+                        }
                     }
                 }
+                return State.DRAW;
             }
-            return State.DRAW;
         }
-    }
+
     public void paint(Graphics g){
 
             // Gambar gambar latar belakang
@@ -100,9 +103,9 @@ public class Board {
             }
         }
     }
+
     public void loadImage(){
         ImageIcon icon = new ImageIcon("src/tictactoe/pantai.jpg");
         backgroundImage = icon.getImage();
-
     }
 }

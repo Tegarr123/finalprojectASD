@@ -28,6 +28,7 @@ public class Cell {
         this.col = col;
         this.content = Seed.NO_SEED;
     }
+
     public void newGame(){
         content = Seed.NO_SEED;
     }
