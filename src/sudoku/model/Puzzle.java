@@ -8,8 +8,6 @@
  * 3 - 5026221109 - Ahmad Fadhino Tegar Permana
  */
 package sudoku.model;
-
-import sudoku.controller.SudokuMain;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.cell.Cell;
 
@@ -41,27 +39,14 @@ public class Puzzle {
         Random randomizer = new Random();
         randomizer.setSeed(System.currentTimeMillis());
         int getRandom = randomizer.nextInt(10000);
-        String sudokuString;
-        switch (sudokuDiff){
-            case INTERMEDIATE:
-                sudokuString = Repo.intermediate.get(getRandom);
-                break;
-            case CHALLENGING:
-                sudokuString = Repo.challenging.get(getRandom);
-                break;
-            case TOUGH:
-                sudokuString = Repo.tough.get(getRandom);
-                break;
-            case SUPER_TOUGH:
-                sudokuString = Repo.superTough.get(getRandom);
-                break;
-            case INSANE:
-                sudokuString = Repo.insane.get(getRandom);
-                break;
-            default:
-                sudokuString = Repo.easy.get(getRandom);
-                break;
-        }
+        String sudokuString = switch (sudokuDiff) {
+            case INTERMEDIATE -> Repo.intermediate.get(getRandom);
+            case CHALLENGING -> Repo.challenging.get(getRandom);
+            case TOUGH -> Repo.tough.get(getRandom);
+            case SUPER_TOUGH -> Repo.superTough.get(getRandom);
+            case INSANE -> Repo.insane.get(getRandom);
+            default -> Repo.easy.get(getRandom);
+        };
         int i = 0;
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE; c++){

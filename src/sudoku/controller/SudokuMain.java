@@ -91,7 +91,8 @@ import javax.swing.*;
 
         public static void backtrackSolve(){
 
-            puzzle.solveSudoku();
+            boolean solve = puzzle.solveSudoku();
+            System.out.println("Sudoku is " + ((solve) ? "solved" : "unsolved"));
             SudokuMain.board.newGame();
         }
         public static void switchTheme(){
