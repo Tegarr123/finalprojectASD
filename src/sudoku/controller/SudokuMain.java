@@ -43,6 +43,7 @@ import javax.swing.*;
             puzzle = new Puzzle(SudokuDiff.EASY);
             board = new GameBoardPanel();
 
+
             backup  = puzzle.getSolvedBackUp();
             add(board, BorderLayout.CENTER);
             add(toolBar, BorderLayout.PAGE_END);
@@ -83,12 +84,9 @@ import javax.swing.*;
             backup = puzzle.getSolvedBackUp();
             board.newGame();
         }
-        public static void solve() {
-            boolean[] given = new boolean[SudokuConstants.GRID_SIZE];
-            Arrays.fill(given, true);
-            for (int i = 0 ; i < SudokuConstants.GRID_SIZE ; i++) puzzle.isGiven[i] = given;
-            puzzle.solveSudoku(puzzle.numbers, 0, 0);
-            board.newGame();
+
+        public static void backtrackSolve(){
+            puzzle.solveSudoku();
         }
         public static void switchTheme(){
             ImageIcon imageIcon;
@@ -114,10 +112,11 @@ import javax.swing.*;
             int col = getCellToSolve.getCol();
             puzzle.numbers[row][col] = backup.numbers[row][col];
             puzzle.isGiven[row][col] = true;
-
             board.newGame();
 
         }
+
+
 
 
     }

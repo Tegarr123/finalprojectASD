@@ -175,6 +175,7 @@ public class Cell extends JTextField {
                 SudokuMain.puzzle.numbers[row][col] = getData;
                 SudokuMain.puzzle.isGiven[row][col] = true;
                 if (SudokuMain.puzzle.check(row, col)){
+
                 }else {
                     setStatus(CellStatus.WRONG_GUESS);
                     paint();

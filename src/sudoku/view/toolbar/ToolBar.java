@@ -33,7 +33,6 @@ public class ToolBar extends JPanel {
             SudokuMain.hint();
         });
 
-        boolean isDark = false;
         imageIcon = new ImageIcon(ToolBar.class.getResource("../../images/sun.png"));
         Image image = imageIcon.getImage();
         Image newImageSun = image.getScaledInstance(30, 25, Image.SCALE_SMOOTH);
@@ -50,7 +49,7 @@ public class ToolBar extends JPanel {
         btn_solve.setForeground(ToolBarResources.FG_TOOLBAR);
         btn_solve.setFont(ToolBarResources.FONT_TOOLBAR);
         btn_solve.addActionListener(e -> {
-                SudokuMain.solve();
+                SudokuMain.backtrackSolve();
 
         });
         btn_newGame = new JButton("NEW GAME");

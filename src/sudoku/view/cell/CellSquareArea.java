@@ -38,7 +38,9 @@ public class CellSquareArea extends JPanel {
                 Cell newCell = new Cell(cellRow, cellCol);
                 newCell.newGame(SudokuMain.puzzle.numbers[cellRow][cellCol],
                         SudokuMain.puzzle.isGiven[cellRow][cellCol]);
-                if (!SudokuMain.puzzle.isGiven[cellRow][cellCol]) SudokuMain.toGuessCell.add(newCell);
+                if (!SudokuMain.puzzle.isGiven[cellRow][cellCol]) {
+                    SudokuMain.toGuessCell.add(newCell);
+                }
                 add(newCell);
             }
         }
