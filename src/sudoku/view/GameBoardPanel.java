@@ -19,10 +19,9 @@ public class GameBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L;  // to prevent serial warning
 
     // Define named constants for UI sizes
-    public static final int CELL_SIZE = 60;   // sudoku.view.cell.Cell width/height in pixels
+    public static final int CELL_SIZE = 55;   // sudoku.view.cell.Cell width/height in pixels
     public static final int BOARD_WIDTH  = CELL_SIZE * SudokuConstants.GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
-
 
 
     // Board width/height in pixels
