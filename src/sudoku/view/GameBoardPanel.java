@@ -24,7 +24,6 @@ public class GameBoardPanel extends JPanel {
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
 
 
-
     // Board width/height in pixels
 
     // Define properties

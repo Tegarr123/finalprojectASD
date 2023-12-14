@@ -23,15 +23,12 @@ public class GameMain extends JPanel {
     public static final String TITLE = "Tic Tac Toe";
     public static final Color COLOR_BG = Color.white;
     public static final Color COLOR_BG_STATUS = new Color(216, 216, 216);
-    public static final Color COLOR_GROSS = new Color(239, 105, 80);
-    public static final Color COLOR_NOUGHT = new Color(64, 154, 225);
     public static final Font FONT_STATUS = new Font("OCR A Extended", Font.PLAIN, 14);
 
     private Board board;
     private State currentState;
     private Seed currentPlayer;
     private JLabel statusBar;
-
     private int xWins=0;
     private int oWins=0;
 
@@ -102,12 +99,12 @@ public class GameMain extends JPanel {
         if (currentState == State.CROSS_WON) {
             xWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("Crab Wins! Poin : "+ xWins+" | Click to play again");
+            statusBar.setText("Crab Wins! Poin : "+ xWins+" | Click To Continue");
             updateScoreboard();
         }else if (currentState == State.NOUGHT_WON) {
             oWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText("Octopus Wins! Poin : "+ oWins+" | Click to play again");
+            statusBar.setText("Octopus Wins! Poin : "+ oWins+" | Click To Continue");
             updateScoreboard();
 
         }
@@ -147,8 +144,6 @@ public class GameMain extends JPanel {
         } else {
             statusBar.setForeground(Color.BLACK);
         }
-
-
     }
 
 
