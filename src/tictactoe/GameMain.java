@@ -168,7 +168,7 @@ public class GameMain extends JPanel {
         statusBar.setForeground(Color.BLACK);
 
         if (xWins == 3) {
-            JOptionPane.showMessageDialog(this, "CRAB WON");
+            JOptionPane.showMessageDialog(this, player1name+" WON");
             statusBar.setForeground(Color.RED);
             statusBar.setText(player1name+" WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
@@ -177,7 +177,7 @@ public class GameMain extends JPanel {
             newGame();
         }
         else if (oWins == 3) {
-            JOptionPane.showMessageDialog(this, "OCTOPUS WIN");
+            JOptionPane.showMessageDialog(this, player2name+" WIN");
             statusBar.setForeground(Color.RED);
             statusBar.setText(player2name+" WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
