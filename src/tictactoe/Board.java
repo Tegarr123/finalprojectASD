@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.nio.file.Path;
 
 
@@ -27,6 +28,8 @@ public class Board extends JPanel{
     public static final Color COLOR_GRID = Color.LIGHT_GRAY;
     public static final int Y_OFFSET = 1;
     private Image backgroundImage;
+    public static String[] path = new String[3];
+    private static int iter = 1;
 
     Cell[][] cells;
     public Board(){
@@ -102,8 +105,10 @@ public class Board extends JPanel{
         }
     }
     public void loadImage(){
-        ImageIcon icon = new ImageIcon("src/tictactoe/pantai.jpg");
+        iter = (iter+1)%3;
+        ImageIcon icon = new ImageIcon(path[iter]);
         backgroundImage = icon.getImage();
 
     }
+
 }

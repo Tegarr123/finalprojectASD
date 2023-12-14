@@ -37,6 +37,7 @@ public class GameMain extends JPanel {
 
 
     public GameMain(){
+
         super.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -72,8 +73,18 @@ public class GameMain extends JPanel {
         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
 
 
-
+        board.path[0] = "src/tictactoe/pantai.jpg";
+        board.path[1] = "src/tictactoe/bg-2.jpeg";
+        board.path[2] = "src/tictactoe/bg-3.jpeg";
         initGame();
+        bottomBar.buttonSwitchBackground.addActionListener(e -> {
+            board.removeAll();
+            board.loadImage();
+            board.initGame();
+            board.newGame();
+            updateUI();
+        });
+        bottomBar.add(bottomBar.buttonSwitchBackground);
         add(board, BorderLayout.CENTER);
         add(bottomBar, BorderLayout.NORTH);
         newGame();

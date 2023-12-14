@@ -4,10 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BottomBar extends JPanel {
-    JButton buttonSwitchBackground;
+    public JButton buttonSwitchBackground;
     BottomBar(){
     buttonSwitchBackground = new JButton("Switch");
-    add(buttonSwitchBackground);
+
+
 
 
     }
