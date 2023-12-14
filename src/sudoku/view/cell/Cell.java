@@ -186,6 +186,7 @@ public class Cell extends JTextField {
                 setStatus(CellStatus.WRONG_GUESS);
                 paint();
             }
+
         }
     }
 

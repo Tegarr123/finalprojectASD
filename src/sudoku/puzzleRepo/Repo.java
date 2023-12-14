@@ -22,12 +22,12 @@ public class Repo {
     public static ArrayList<String> insane= new ArrayList<>();
 
     public static void repoInit(){
-        Scanner scEasy = new Scanner(Repo.class.getResourceAsStream("../resources/0.txt"));
-        Scanner scIntermediate = new Scanner(Repo.class.getResourceAsStream("../resources/1.txt"));
-        Scanner scChallenging = new Scanner(Repo.class.getResourceAsStream("../resources/2.txt"));
-        Scanner scTough = new Scanner(Repo.class.getResourceAsStream("../resources/3.txt"));
-        Scanner scSuperTough = new Scanner(Repo.class.getResourceAsStream("../resources/4.txt"));
-        Scanner scInsane = new Scanner(Repo.class.getResourceAsStream("../resources/5.txt"));
+        Scanner scEasy = new Scanner(Repo.class.getResourceAsStream("../resources/easy.txt"));
+        Scanner scIntermediate = new Scanner(Repo.class.getResourceAsStream("../resources/intermediate.txt"));
+        Scanner scChallenging = new Scanner(Repo.class.getResourceAsStream("../resources/challenging.txt"));
+        Scanner scTough = new Scanner(Repo.class.getResourceAsStream("../resources/tough.txt"));
+        Scanner scSuperTough = new Scanner(Repo.class.getResourceAsStream("../resources/supertough.txt"));
+        Scanner scInsane = new Scanner(Repo.class.getResourceAsStream("../resources/insane.txt"));
         while(scEasy.hasNext()){
             easy.add(scEasy.nextLine());
             intermediate.add(scIntermediate.nextLine());

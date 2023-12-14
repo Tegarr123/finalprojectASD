@@ -13,10 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.file.Path;
 
 
-
-public class Board {
+public class Board extends JPanel{
     public static final int ROWS = 3;
     public static final int COLS = 3;
     public static final int CANVAS_WIDTH = Cell.SIZE * COLS;

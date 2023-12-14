@@ -31,7 +31,7 @@ public class GameMain extends JPanel {
     private State currentState;
     private Seed currentPlayer;
     private JLabel statusBar;
-
+    private BottomBar bottomBar;
     private int xWins=0;
     private int oWins=0;
 
@@ -67,14 +67,20 @@ public class GameMain extends JPanel {
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
         super.setLayout(new BorderLayout());
         super.add(statusBar, BorderLayout.PAGE_END);
-        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 30));
+        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 55));
         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
 
+
+
         initGame();
+        add(board, BorderLayout.CENTER);
+        add(bottomBar, BorderLayout.NORTH);
         newGame();
     }
     public void initGame(){
         board = new Board();
+        bottomBar = new BottomBar();
+
     }
     public void newGame(){
         for (int row = 0 ; row < Board.ROWS ; row++){
@@ -154,3 +160,5 @@ public class GameMain extends JPanel {
 
 
 }
+
+
