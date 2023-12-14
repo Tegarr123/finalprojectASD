@@ -81,7 +81,7 @@ public class Board {
     public void paint(Graphics g){
 
             // Gambar gambar latar belakang
-            g.drawImage(backgroundImage, 0, 0,360,360, null);
+        g.drawImage(backgroundImage, 0, 0,360,360, null);
 
 
         g.setColor(COLOR_GRID);
