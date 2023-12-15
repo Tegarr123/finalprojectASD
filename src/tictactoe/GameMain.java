@@ -85,7 +85,7 @@ public class GameMain extends JPanel {
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
         super.setLayout(new BorderLayout());
         super.add(statusBar, BorderLayout.PAGE_END);
-        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 74));
+        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 72));
         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
 
 
@@ -190,9 +190,6 @@ public class GameMain extends JPanel {
 
 
     }
-
-
-
 }
 
 
