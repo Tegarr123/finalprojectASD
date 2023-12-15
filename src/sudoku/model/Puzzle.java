@@ -102,6 +102,7 @@ public class Puzzle {
         while(stack.size() < SudokuConstants.GRID_SIZE*SudokuConstants.GRID_SIZE){
 
             time++;
+
             if(isLocked[curRow][curCol]){
                 Cell lockedCell = new Cell(curRow, curCol);
                 lockedCell.setNumber(numbers[curRow][curCol]);

@@ -68,8 +68,10 @@ import javax.swing.*;
         }
         public static void newGame(){
             Cell.getOptionPane = true;
+
+
             String diff = (String) SudokuMain.toolBar.jComboBox.getSelectedItem();
-            topbar.difficulty.setText("Difficulty : " + diff+"-"+puzzle.getRandom+"     ");
+            topbar.difficulty.setText("Difficulty : " + diff+" - "+(puzzle.getRandom+1)+"     ");
             switch (diff){
                 case "INTERMEDIATE":
                     puzzle.sudokuDiff = SudokuDiff.INTERMEDIATE;
@@ -101,7 +103,7 @@ import javax.swing.*;
             Cell.getOptionPane = false;
             boolean solve = puzzle.solveSudoku();
             System.out.println("Sudoku is " + ((solve) ? "solved" : "unsolved"));
-            SudokuMain.board.newGame();
+            board.newGame();
 
         }
         public static void switchTheme(){
