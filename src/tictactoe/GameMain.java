@@ -85,7 +85,7 @@ public class GameMain extends JPanel {
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
         super.setLayout(new BorderLayout());
         super.add(statusBar, BorderLayout.PAGE_END);
-        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 74));
+        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 72));
         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
 
 
@@ -157,6 +157,7 @@ public class GameMain extends JPanel {
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+                frame.setResizable(false);
 
             }
         });
@@ -169,8 +170,8 @@ public class GameMain extends JPanel {
 
         if (xWins == 3) {
             JOptionPane.showMessageDialog(this, player1name+" WON");
-            statusBar.setForeground(Color.RED);
-            statusBar.setText(player1name+" WON THE GAME!! Click to play again");
+//            statusBar.setForeground(Color.RED);
+//            statusBar.setText(player1name+" WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
             xWins=0;
             oWins=0;
@@ -178,8 +179,8 @@ public class GameMain extends JPanel {
         }
         else if (oWins == 3) {
             JOptionPane.showMessageDialog(this, player2name+" WIN");
-            statusBar.setForeground(Color.RED);
-            statusBar.setText(player2name+" WON THE GAME!! Click to play again");
+//            statusBar.setForeground(Color.RED);
+//            statusBar.setText(player2name+" WON THE GAME!! Click to play again");
             //currentState = State.GAME_OVER;
             xWins=0;
             oWins=0;
