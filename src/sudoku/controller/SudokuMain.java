@@ -9,23 +9,27 @@
  */
 package sudoku.controller;
 
-import sudoku.model.SudokuConstants;
+
 import sudoku.model.SudokuDiff;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.GameBoardPanel;
 import sudoku.model.Puzzle;
 import sudoku.view.cell.Cell;
 import sudoku.view.toolbar.ToolBar;
+import sudoku.view.topbar.TopBar;
+import sudoku.view.topbar.TopBarResources;
 
 import java.awt.*;
+import java.io.Serial;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import javax.swing.*;
 /**
  * The main Sudoku program
  */
     public class SudokuMain extends JFrame{
+        @Serial
         private static final long serialVersionUID = 1L;  // to prevent serial warning
         // private variables
         public static GameBoardPanel board;
@@ -34,6 +38,7 @@ import javax.swing.*;
         public static ArrayList<Cell> toGuessCell = new ArrayList<>();
         public static Puzzle backup;
 
+        public static TopBar topbar;
         public static boolean isDark = false;
 
         // Constructor
@@ -42,9 +47,13 @@ import javax.swing.*;
             toolBar = new ToolBar();
             puzzle = new Puzzle(SudokuDiff.EASY);
             board = new GameBoardPanel();
-
-
             backup  = puzzle.getSolvedBackUp();
+            topbar = new TopBar();
+            topbar.add(topbar.difficulty);
+            topbar.add(topbar.WMG7);
+
+
+            add(topbar, BorderLayout.NORTH);
             add(board, BorderLayout.CENTER);
             add(toolBar, BorderLayout.PAGE_END);
 
@@ -58,8 +67,9 @@ import javax.swing.*;
             setVisible(true);
         }
         public static void newGame(){
-
+            Cell.getOptionPane = true;
             String diff = (String) SudokuMain.toolBar.jComboBox.getSelectedItem();
+            topbar.difficulty.setText("Difficulty : " + diff+"-"+puzzle.getRandom+"     ");
             switch (diff){
                 case "INTERMEDIATE":
                     puzzle.sudokuDiff = SudokuDiff.INTERMEDIATE;
@@ -76,6 +86,8 @@ import javax.swing.*;
                 case "INSANE":
                     puzzle.sudokuDiff = SudokuDiff.INSANE;
                     break;
+                case null:
+                    break;
                 default:
                     puzzle.sudokuDiff = SudokuDiff.EASY;
                     break;
@@ -86,16 +98,26 @@ import javax.swing.*;
         }
 
         public static void backtrackSolve(){
-            puzzle.solveSudoku();
+            Cell.getOptionPane = false;
+            boolean solve = puzzle.solveSudoku();
+            System.out.println("Sudoku is " + ((solve) ? "solved" : "unsolved"));
+            SudokuMain.board.newGame();
+
         }
         public static void switchTheme(){
             ImageIcon imageIcon;
             if (isDark){
-                imageIcon = new ImageIcon(SudokuMain.class.getResource("../images/sun.png"));
+                imageIcon = new ImageIcon(Objects.requireNonNull(SudokuMain.class.getResource("../images/sun.png")));
                 toolBar.setBackground(Color.WHITE);
+                topbar.setBackground(Color.white);
+                topbar.WMG7.setForeground(TopBarResources.FG_TOPBAR);
+                topbar.difficulty.setForeground(TopBarResources.FG_TOPBAR);
             }else{
                 toolBar.setBackground(new Color(8, 25, 65));
-                imageIcon = new ImageIcon(SudokuMain.class.getResource("../images/moon.png"));
+                topbar.setBackground(new Color(8, 25, 65));
+                topbar.WMG7.setForeground(TopBarResources.FG_TOPBAR_DARK);
+                topbar.difficulty.setForeground(TopBarResources.FG_TOPBAR_DARK);
+                imageIcon = new ImageIcon(Objects.requireNonNull(SudokuMain.class.getResource("../images/moon.png")));
             }
             isDark = !isDark;
             board.newGame();

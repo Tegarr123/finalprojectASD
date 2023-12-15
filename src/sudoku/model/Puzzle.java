@@ -8,8 +8,6 @@
  * 3 - 5026221109 - Ahmad Fadhino Tegar Permana
  */
 package sudoku.model;
-
-import sudoku.controller.SudokuMain;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.cell.Cell;
 
@@ -22,6 +20,7 @@ public class Puzzle {
     // The clues - isGiven (no need to guess) or need to guess
     public boolean[][] isGiven;
     public SudokuDiff sudokuDiff;
+    public int getRandom;
 
     // Constructor
     public Puzzle(SudokuDiff sudokuDiff) {
@@ -34,34 +33,20 @@ public class Puzzle {
     //  to control the difficulty level.
     // This method shall set (or update) the arrays numbers and isGiven
     public void init() {
-        System.out.println(sudokuDiff);
         // I hardcode a puzzle here for illustration and testing.
         numbers =   new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         isGiven  = new boolean[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         Random randomizer = new Random();
         randomizer.setSeed(System.currentTimeMillis());
-        int getRandom = randomizer.nextInt(10000);
-        String sudokuString;
-        switch (sudokuDiff){
-            case INTERMEDIATE:
-                sudokuString = Repo.intermediate.get(getRandom);
-                break;
-            case CHALLENGING:
-                sudokuString = Repo.challenging.get(getRandom);
-                break;
-            case TOUGH:
-                sudokuString = Repo.tough.get(getRandom);
-                break;
-            case SUPER_TOUGH:
-                sudokuString = Repo.superTough.get(getRandom);
-                break;
-            case INSANE:
-                sudokuString = Repo.insane.get(getRandom);
-                break;
-            default:
-                sudokuString = Repo.easy.get(getRandom);
-                break;
-        }
+        this.getRandom = randomizer.nextInt(10000);
+        String sudokuString = switch (sudokuDiff) {
+            case INTERMEDIATE -> Repo.intermediate.get(getRandom);
+            case CHALLENGING -> Repo.challenging.get(getRandom);
+            case TOUGH -> Repo.tough.get(getRandom);
+            case SUPER_TOUGH -> Repo.superTough.get(getRandom);
+            case INSANE -> Repo.insane.get(getRandom);
+            default -> Repo.easy.get(getRandom);
+        };
         int i = 0;
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE; c++){
@@ -107,13 +92,14 @@ public class Puzzle {
         int curCol = 0;
         int curValue =1;
         int time = 0 ;
+        System.out.println("==="+"UNSOLVED"+"===");
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE ; c++){
                 System.out.print(numbers[r][c] + " ");
             }
             System.out.println();
         }
-        while(stack.size() < 81){
+        while(stack.size() < SudokuConstants.GRID_SIZE*SudokuConstants.GRID_SIZE){
 
             time++;
             if(isLocked[curRow][curCol]){
@@ -171,6 +157,7 @@ public class Puzzle {
                 }
             }
         }
+        System.out.println("==="+"SOLVED"+"===");
         for(int r = 0 ; r < SudokuConstants.GRID_SIZE ; r++){
             for (int c = 0 ; c < SudokuConstants.GRID_SIZE ; c++){
                 System.out.print(numbers[r][c] + " ");
@@ -179,7 +166,6 @@ public class Puzzle {
         }
         System.out.println("Number of steps: " + time);
 
-        SudokuMain.board.newGame();
         return true;
     }
     public boolean[][] setLocked(int[][] board){
@@ -239,7 +225,7 @@ public class Puzzle {
         }
         return true;
     }
-    public boolean check(int row, int col) {
+    public boolean isValid(int row, int col) {
         for (int i = 0; i < 9; i++) {
             if (i != col && numbers[row][col] == numbers[row][i]) {
                 return false;
@@ -260,7 +246,7 @@ public class Puzzle {
     public boolean isWin() {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                if (numbers[r][c] == 0 || check(r, c) == false) {
+                if (numbers[r][c] == 0 || isValid(r, c) == false) {
                     return false;
                 }
             }
