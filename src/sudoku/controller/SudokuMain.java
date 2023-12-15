@@ -16,6 +16,8 @@ import sudoku.view.GameBoardPanel;
 import sudoku.model.Puzzle;
 import sudoku.view.cell.Cell;
 import sudoku.view.toolbar.ToolBar;
+import sudoku.view.topbar.TopBar;
+import sudoku.view.topbar.TopBarResources;
 
 import java.awt.*;
 import java.io.Serial;
@@ -36,6 +38,7 @@ import javax.swing.*;
         public static ArrayList<Cell> toGuessCell = new ArrayList<>();
         public static Puzzle backup;
 
+        public static TopBar topbar;
         public static boolean isDark = false;
 
         // Constructor
@@ -44,9 +47,13 @@ import javax.swing.*;
             toolBar = new ToolBar();
             puzzle = new Puzzle(SudokuDiff.EASY);
             board = new GameBoardPanel();
-
-
             backup  = puzzle.getSolvedBackUp();
+            topbar = new TopBar();
+            topbar.add(topbar.difficulty);
+            topbar.add(topbar.WMG7);
+
+
+            add(topbar, BorderLayout.NORTH);
             add(board, BorderLayout.CENTER);
             add(toolBar, BorderLayout.PAGE_END);
 
@@ -60,8 +67,9 @@ import javax.swing.*;
             setVisible(true);
         }
         public static void newGame(){
-
+            Cell.getOptionPane = true;
             String diff = (String) SudokuMain.toolBar.jComboBox.getSelectedItem();
+            topbar.difficulty.setText("Difficulty : " + diff+"-"+puzzle.getRandom+"     ");
             switch (diff){
                 case "INTERMEDIATE":
                     puzzle.sudokuDiff = SudokuDiff.INTERMEDIATE;
@@ -90,18 +98,25 @@ import javax.swing.*;
         }
 
         public static void backtrackSolve(){
-
+            Cell.getOptionPane = false;
             boolean solve = puzzle.solveSudoku();
             System.out.println("Sudoku is " + ((solve) ? "solved" : "unsolved"));
             SudokuMain.board.newGame();
+
         }
         public static void switchTheme(){
             ImageIcon imageIcon;
             if (isDark){
                 imageIcon = new ImageIcon(Objects.requireNonNull(SudokuMain.class.getResource("../images/sun.png")));
                 toolBar.setBackground(Color.WHITE);
+                topbar.setBackground(Color.white);
+                topbar.WMG7.setForeground(TopBarResources.FG_TOPBAR);
+                topbar.difficulty.setForeground(TopBarResources.FG_TOPBAR);
             }else{
                 toolBar.setBackground(new Color(8, 25, 65));
+                topbar.setBackground(new Color(8, 25, 65));
+                topbar.WMG7.setForeground(TopBarResources.FG_TOPBAR_DARK);
+                topbar.difficulty.setForeground(TopBarResources.FG_TOPBAR_DARK);
                 imageIcon = new ImageIcon(Objects.requireNonNull(SudokuMain.class.getResource("../images/moon.png")));
             }
             isDark = !isDark;

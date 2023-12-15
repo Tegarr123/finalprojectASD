@@ -20,6 +20,7 @@ public class Puzzle {
     // The clues - isGiven (no need to guess) or need to guess
     public boolean[][] isGiven;
     public SudokuDiff sudokuDiff;
+    public int getRandom;
 
     // Constructor
     public Puzzle(SudokuDiff sudokuDiff) {
@@ -32,13 +33,12 @@ public class Puzzle {
     //  to control the difficulty level.
     // This method shall set (or update) the arrays numbers and isGiven
     public void init() {
-        System.out.println(sudokuDiff);
         // I hardcode a puzzle here for illustration and testing.
         numbers =   new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         isGiven  = new boolean[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
         Random randomizer = new Random();
         randomizer.setSeed(System.currentTimeMillis());
-        int getRandom = randomizer.nextInt(10000);
+        this.getRandom = randomizer.nextInt(10000);
         String sudokuString = switch (sudokuDiff) {
             case INTERMEDIATE -> Repo.intermediate.get(getRandom);
             case CHALLENGING -> Repo.challenging.get(getRandom);
@@ -99,7 +99,7 @@ public class Puzzle {
             }
             System.out.println();
         }
-        while(stack.size() < 81){
+        while(stack.size() < SudokuConstants.GRID_SIZE*SudokuConstants.GRID_SIZE){
 
             time++;
             if(isLocked[curRow][curCol]){
@@ -225,7 +225,7 @@ public class Puzzle {
         }
         return true;
     }
-    public boolean check(int row, int col) {
+    public boolean isValid(int row, int col) {
         for (int i = 0; i < 9; i++) {
             if (i != col && numbers[row][col] == numbers[row][i]) {
                 return false;
@@ -246,7 +246,7 @@ public class Puzzle {
     public boolean isWin() {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                if (numbers[r][c] == 0 || check(r, c) == false) {
+                if (numbers[r][c] == 0 || isValid(r, c) == false) {
                     return false;
                 }
             }

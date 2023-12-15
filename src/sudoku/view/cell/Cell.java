@@ -127,6 +127,8 @@ public class Cell extends JTextField {
     public int getCol() {
         return col;
     }
+
+    public static boolean getOptionPane = true;
     private class CellInputListener implements // ActionListener,
             DocumentListener {
         // @Override
@@ -174,7 +176,7 @@ public class Cell extends JTextField {
                 int getData = Integer.valueOf(getDocument().getText(0,1));
                 SudokuMain.puzzle.numbers[row][col] = getData;
                 SudokuMain.puzzle.isGiven[row][col] = true;
-                if (SudokuMain.puzzle.check(row, col)){
+                if (SudokuMain.puzzle.isValid(row, col)){
 
                 }else {
                     setStatus(CellStatus.WRONG_GUESS);
@@ -186,7 +188,9 @@ public class Cell extends JTextField {
                 setStatus(CellStatus.WRONG_GUESS);
                 paint();
             }
-
+            if(SudokuMain.puzzle.isWin()&&getOptionPane){
+                JOptionPane.showMessageDialog(null, "Congratulation");
+            }
         }
     }
 
