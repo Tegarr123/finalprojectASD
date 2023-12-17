@@ -97,6 +97,7 @@ import javax.swing.*;
             puzzle.init();
             backup = puzzle.getSolvedBackUp();
             board.newGame();
+
         }
 
         public static void backtrackSolve(){
