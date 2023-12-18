@@ -9,6 +9,7 @@
  */
 package sudoku.view.toolbar;
 
+
 import sudoku.controller.SudokuMain;
 import sudoku.model.SudokuConstants;
 import sudoku.model.SudokuDiff;
