@@ -9,8 +9,13 @@
  */
 package tictactoe;
 
+import HomePage.PhotoFrame;
+import sudoku.controller.SudokuMain;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serial;
@@ -35,6 +40,7 @@ public class GameMain extends JPanel {
     private int oWins=0;
     private String player1name;
     private String player2name;
+    private JFrame frame;
 
     public String getPlayer1name(){
         return player1name;
@@ -44,8 +50,9 @@ public class GameMain extends JPanel {
         return player2name;
     }
     public GameMain(){
-        player1name = JOptionPane.showInputDialog(this, "Enter your name as crab:", "Player 1", JOptionPane.PLAIN_MESSAGE);
-        player2name = JOptionPane.showInputDialog(this, "Enter your name as octopus:", "Player 2", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this,"GET 3 POINTS TO WIN THIS GAME, LET'S GO!");
+        player1name = JOptionPane.showInputDialog(this, "Enter your name as Crab:", "Player 1", JOptionPane.PLAIN_MESSAGE);
+        player2name = JOptionPane.showInputDialog(this, "Enter your name as Octopus:", "Player 2", JOptionPane.PLAIN_MESSAGE);
         if (player1name == null || player1name.trim().isEmpty()) {
             player1name = "Crab";
         }
@@ -84,7 +91,7 @@ public class GameMain extends JPanel {
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
         super.setLayout(new BorderLayout());
         super.add(statusBar, BorderLayout.PAGE_END);
-        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 70));
+        //super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 70));
         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 74));
         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
 
@@ -105,6 +112,33 @@ public class GameMain extends JPanel {
         add(board, BorderLayout.CENTER);
         add(bottomBar, BorderLayout.NORTH);
         newGame();
+
+        bottomBar.add(bottomBar.toHomePage);
+        add(board, BorderLayout.CENTER);
+        add(bottomBar, BorderLayout.NORTH);
+        bottomBar.toHomePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
+                currentFrame.dispose();
+                new PhotoFrame();
+            }
+        });
+        bottomBar.add(bottomBar.toSudoku);
+        add(board, BorderLayout.CENTER);
+        add(bottomBar, BorderLayout.NORTH);
+
+        bottomBar.add(bottomBar.toSudoku);
+        add(board, BorderLayout.CENTER);
+        add(bottomBar, BorderLayout.NORTH);
+        bottomBar.toSudoku.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor((Component) e.getSource());
+                currentFrame.dispose();
+                new SudokuMain();
+            }
+        });
     }
     public void initGame(){
         board = new Board();
@@ -133,18 +167,16 @@ public class GameMain extends JPanel {
         } else if (currentState == State.DRAW) {
             statusBar.setForeground(Color.RED);
             statusBar.setText("It's a Draw! Click to play again");
-        }
-        if (currentState == State.CROSS_WON) {
+        } else if (currentState == State.CROSS_WON) {
             xWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText(player1name+" Wins! Poin : "+ xWins+" | Click to play again");
+            statusBar.setText(player1name+" Win! Poin : "+ xWins+" | Click to play again");
             updateScoreboard();
         }else if (currentState == State.NOUGHT_WON) {
             oWins++;
             statusBar.setForeground(Color.RED);
-            statusBar.setText(player2name+" Wins! Poin : "+ oWins+" | Click to play again");
+            statusBar.setText(player2name+" Win! Poin : "+ oWins+" | Click to play again");
             updateScoreboard();
-
         }
     }
 
@@ -154,21 +186,19 @@ public class GameMain extends JPanel {
         statusBar.setForeground(Color.BLACK);
 
         if (xWins == 3) {
-            JOptionPane.showMessageDialog(this, player1name+" WON");
-            statusBar.setForeground(Color.RED);
-            statusBar.setText(player1name+" WON THE GAME!! Click to play again");
-            //currentState = State.GAME_OVER;
+            JOptionPane.showMessageDialog(this, player1name+"'s Points : "+xWins+ " | "+player2name+"'s Points : "+oWins+"\n"+player1name+" WIN!!");
             xWins=0;
             oWins=0;
+            currentPlayer = Seed.CROSS;
+            statusBar.setText((currentPlayer == Seed.CROSS) ? player1name +"'s Turn" : player2name+"'s Turn");
             newGame();
         }
         else if (oWins == 3) {
-            JOptionPane.showMessageDialog(this, player2name+" WIN");
-            statusBar.setForeground(Color.RED);
-            statusBar.setText(player2name+" WON THE GAME!! Click to play again");
-            //currentState = State.GAME_OVER;
+            JOptionPane.showMessageDialog(this, player1name+"'s Points : "+xWins+ " | "+player2name+"'s Points : "+oWins+"\n"+player2name+" WIN!!");
             xWins=0;
             oWins=0;
+            currentPlayer = Seed.CROSS;
+            statusBar.setText((currentPlayer == Seed.CROSS) ? player1name +"'s Turn" : player2name+"'s Turn");
             newGame();
         } else {
             statusBar.setForeground(Color.BLACK);

@@ -19,8 +19,8 @@ import java.nio.file.Path;
 
 
 public class Board extends JPanel{
-    public static final int ROWS = 3;
-    public static final int COLS = 3;
+    public static int ROWS = 3;
+    public static int COLS = 3;
     public static final int CANVAS_WIDTH = Cell.SIZE * COLS;
     public static final int CANVAS_HEIGHT = Cell.SIZE * ROWS;
     public static final int GRID_WIDTH = 8;

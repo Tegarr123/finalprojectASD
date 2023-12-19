@@ -14,8 +14,13 @@ import java.awt.*;
 
 public class BottomBar extends JPanel {
     public JButton buttonSwitchBackground;
+    public JButton toHomePage;
+    public JButton toSudoku;
     BottomBar(){
     buttonSwitchBackground = new JButton("Switch");
+    toHomePage = new JButton("Home Page");
+    toSudoku = new JButton("Try Sudoku");
+
 
 
 
