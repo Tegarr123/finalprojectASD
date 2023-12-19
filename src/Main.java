@@ -7,7 +7,8 @@
  * 2 - 5026221095 - Nida Aulia Amartika
  * 3 - 5026221109 - Ahmad Fadhino Tegar Permana
  */
-package HomePage;
+
+import HomePage.PhotoFrame;
 
 public class Main {
     public static void main(String[] args) {
