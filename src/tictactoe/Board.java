@@ -86,24 +86,31 @@ public class Board extends JPanel{
 
     public void paint(Graphics g){
         // Gambar gambar latar belakang
-        g.drawImage(backgroundImage, 0, 0,360,360, null);
+// Draw the background image
+        g.drawImage(backgroundImage, 0, 0, 360, 360, null);
 
+// Set the grid color
         g.setColor(COLOR_GRID);
-        for (int row = 1; row < ROWS; row++){
+
+// Draw horizontal grid lines
+        for (int row = 1; row < ROWS; row++) {
             g.fillRoundRect(0, Cell.SIZE * row - GRID_WIDTH_HALF,
-                    CANVAS_WIDTH -1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
+                    CANVAS_WIDTH - 1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
         }
-        for (int col = 1 ; col < COLS;col++){
+
+// Draw vertical grid lines
+        for (int col = 1; col < COLS; col++) {
             g.fillRoundRect(Cell.SIZE * col - GRID_WIDTH_HALF, 0 + Y_OFFSET,
-                    GRID_WIDTH, CANVAS_HEIGHT -1,
+                    GRID_WIDTH, CANVAS_HEIGHT - 1,
                     GRID_WIDTH, GRID_WIDTH);
         }
-        for (int row = 0; row < ROWS ; row++){
-            for (int col = 0; col < COLS; col++){
+// Draw the cells
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                // Modify the paint method of the cells if needed
                 cells[row][col].paint(g);
             }
         }
-
     }
 
     public void loadImage(){

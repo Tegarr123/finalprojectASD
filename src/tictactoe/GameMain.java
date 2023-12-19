@@ -190,9 +190,6 @@ public class GameMain extends JPanel {
 
 
     }
-
-
-
 }
 
 
