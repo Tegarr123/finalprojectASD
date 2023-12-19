@@ -10,14 +10,13 @@
 package tictactoe;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.ColorModel;
+import java.io.Serial;
 
 public class GameMain extends JPanel {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final String TITLE = "Tic Tac Toe";
@@ -85,6 +84,7 @@ public class GameMain extends JPanel {
         statusBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 12));
         super.setLayout(new BorderLayout());
         super.add(statusBar, BorderLayout.PAGE_END);
+        super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 70));
         super.setPreferredSize(new Dimension(Board.CANVAS_WIDTH, Board.CANVAS_HEIGHT + 74));
         super.setBorder(BorderFactory.createLineBorder(COLOR_BG_STATUS, 2, true));
 

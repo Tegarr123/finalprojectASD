@@ -10,6 +10,7 @@
 package sudoku.controller;
 
 
+import HomePage.PhotoFrame;
 import sudoku.model.SudokuDiff;
 import sudoku.puzzleRepo.Repo;
 import sudoku.view.GameBoardPanel;
@@ -18,8 +19,11 @@ import sudoku.view.cell.Cell;
 import sudoku.view.toolbar.ToolBar;
 import sudoku.view.topbar.TopBar;
 import sudoku.view.topbar.TopBarResources;
+import tictactoe.GameMain;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -65,11 +69,43 @@ import javax.swing.*;
             setResizable(false);
             setTitle("Sudoku");
             setVisible(true);
+
+            JMenuBar menuBar = new JMenuBar();
+            JMenu menu = new JMenu("CHOOSE MENU");
+            JMenuItem toTictactoe = new JMenuItem("Try Tictactoe");
+            JMenuItem goHomePage = new JMenuItem("Go Home Page");
+
+            menu.add(toTictactoe);
+            menu.add(goHomePage);
+            menuBar.add(menu);
+            setJMenuBar(menuBar);
+
+            toTictactoe.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    JFrame frame = new JFrame("TIC TAC TOE");
+                    frame.setContentPane(new GameMain());
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                }
+            });
+            goHomePage.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    new PhotoFrame();
+                }
+            });
         }
         public static void newGame(){
             Cell.getOptionPane = true;
+
+
             String diff = (String) SudokuMain.toolBar.jComboBox.getSelectedItem();
-            topbar.difficulty.setText("Difficulty : " + diff+"-"+puzzle.getRandom+"     ");
+            topbar.difficulty.setText("Difficulty : " + diff+" - "+(puzzle.getRandom+1)+"     ");
             switch (diff){
                 case "INTERMEDIATE":
                     puzzle.sudokuDiff = SudokuDiff.INTERMEDIATE;
@@ -86,8 +122,6 @@ import javax.swing.*;
                 case "INSANE":
                     puzzle.sudokuDiff = SudokuDiff.INSANE;
                     break;
-                case null:
-                    break;
                 default:
                     puzzle.sudokuDiff = SudokuDiff.EASY;
                     break;
@@ -95,13 +129,14 @@ import javax.swing.*;
             puzzle.init();
             backup = puzzle.getSolvedBackUp();
             board.newGame();
+
         }
 
         public static void backtrackSolve(){
             Cell.getOptionPane = false;
             boolean solve = puzzle.solveSudoku();
             System.out.println("Sudoku is " + ((solve) ? "solved" : "unsolved"));
-            SudokuMain.board.newGame();
+            board.newGame();
 
         }
         public static void switchTheme(){

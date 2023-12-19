@@ -7,14 +7,15 @@
  * 2 - 5026221095 - Nida Aulia Amartika
  * 3 - 5026221109 - Ahmad Fadhino Tegar Permana
  */
-package sudoku.controller;
+
+import HomePage.PhotoFrame;
 
 public class Main {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new SudokuMain();
+                new PhotoFrame();
             }
         });
     }

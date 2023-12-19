@@ -40,7 +40,9 @@ public class Cell extends JTextField {
         // Inherited from JTextField: Beautify all the cells once for all
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(CellResources.FONT_NUMBERS);
+        super.setDocument(new CellInputLimiter());
         super.getDocument().addDocumentListener(cellInputListener);
+
     }
     public void setNumber(int number){
         this.number = number;
@@ -175,7 +177,6 @@ public class Cell extends JTextField {
             try{
                 int getData = Integer.valueOf(getDocument().getText(0,1));
                 SudokuMain.puzzle.numbers[row][col] = getData;
-                SudokuMain.puzzle.isGiven[row][col] = true;
                 if (SudokuMain.puzzle.isValid(row, col)){
 
                 }else {
