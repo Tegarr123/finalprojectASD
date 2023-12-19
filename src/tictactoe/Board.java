@@ -88,22 +88,22 @@ public class Board extends JPanel{
         // Gambar gambar latar belakang
         g.drawImage(backgroundImage, 0, 0,360,360, null);
 
-
         g.setColor(COLOR_GRID);
-        for (int row = 1 ; row < ROWS ; row++){
+        for (int row = 1; row < ROWS; row++){
             g.fillRoundRect(0, Cell.SIZE * row - GRID_WIDTH_HALF,
-                    CANVAS_WIDTH - 1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
+                    CANVAS_WIDTH -1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
         }
-        for (int col = 1 ; col < COLS ;col++){
+        for (int col = 1 ; col < COLS;col++){
             g.fillRoundRect(Cell.SIZE * col - GRID_WIDTH_HALF, 0 + Y_OFFSET,
-                    GRID_WIDTH, CANVAS_HEIGHT - 1,
+                    GRID_WIDTH, CANVAS_HEIGHT -1,
                     GRID_WIDTH, GRID_WIDTH);
         }
-        for (int row = 0 ; row < ROWS ; row++){
-            for (int col = 0 ; col < COLS ; col++){
+        for (int row = 0; row < ROWS ; row++){
+            for (int col = 0; col < COLS; col++){
                 cells[row][col].paint(g);
             }
         }
+
     }
 
     public void loadImage(){
@@ -111,5 +111,4 @@ public class Board extends JPanel{
         ImageIcon icon = new ImageIcon(path[iter]);
         backgroundImage = icon.getImage();
     }
-
 }
